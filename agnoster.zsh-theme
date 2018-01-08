@@ -143,9 +143,21 @@ prompt_agnoster_main() {
   prompt_end
 }
 
+# newline
+prompt_newline() {
+  prompt_segment black white '$'
+  if [[ -n $CURRENT_BG ]]; then
+    echo -n " %{%k%F{$CURRENT_BG}%}"
+  else
+    echo -n "%{%k%}"
+  fi
+  echo -n "%{%f%}"
+  CURRENT_BG=''
+}
+
 prompt_agnoster_precmd() {
   vcs_info
-  PROMPT='%{%f%b%k%}$(prompt_agnoster_main) '
+  PROMPT='%{%f%b%k%}$(prompt_agnoster_main) '$'\n$(prompt_newline)'
 }
 
 prompt_agnoster_setup() {
